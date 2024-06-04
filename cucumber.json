@@ -2,6 +2,7 @@
   "default": {
     "paths": [
       "integrationtests/features/"
-    ]
+    ],
+    "parallel": 3
   }
 }
