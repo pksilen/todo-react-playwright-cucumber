@@ -11,8 +11,7 @@ Feature: Show undone todos only
       | firefox desktop  |
       | webkit desktop   |
       | iPhone 14        |
-
-Feature: Show undone todos only
+    
 
   Scenario Outline: Does not show done todos
     Given user navigates to application using <browser>
