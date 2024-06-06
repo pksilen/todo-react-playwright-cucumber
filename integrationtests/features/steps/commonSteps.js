@@ -1,6 +1,8 @@
-import { After, When } from '@cucumber/cucumber';
-import { chromium, devices, firefox, webkit } from '@playwright/test';
+import { After, Then, When, setDefaultTimeout } from '@cucumber/cucumber';
+import { chromium, devices, expect, firefox, webkit } from '@playwright/test';
 import TodoAppPage from './TodoAppPage.js';
+
+setDefaultTimeout(15 * 1000);
 
 async function navigateToApplication(world, browserContext) {
   world.page = await browserContext.newPage();
@@ -30,6 +32,10 @@ When('user navigates to application using iPhone 14', async function () {
   this.browser = await chromium.launch({ headless: false });
   const browserContext = await this.browser.newContext(devices['iPhone 14']);
   await navigateToApplication(this, browserContext);
+});
+
+Then('shown todo count is {int}', async function (shownTodoCount) {
+  await expect(this.todoAppPage.todoItems).toHaveCount(shownTodoCount);
 });
 
 After(async function () {

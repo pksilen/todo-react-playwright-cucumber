@@ -3,6 +3,6 @@
     "paths": [
       "integrationtests/features/"
     ],
-    "parallel": 3
+    "parallel": 8
   }
 }

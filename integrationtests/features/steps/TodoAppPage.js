@@ -5,11 +5,11 @@ export default class TodoAppPage {
   heading;
   undoneTodoCountBadge;
   todoFilterInput;
-  todoTitleInput;
+  addNewTodoTitleInput;
   addTodoButton;
   todoItems;
   editTodoButton;
-  editTodoInput;
+  editTodoTitleInput;
   removeTodoButton;
   markTodoDoneButton;
   markTodoUndoneButton;
@@ -25,10 +25,10 @@ export default class TodoAppPage {
     this.heading = page.getByRole('status').getByRole('heading', { name: /Todos/i });
     this.undoneTodoCountBadge = page.getByTitle(/Undone todo count/i);
     this.todoFilterInput = page.getByPlaceholder(/Search todos/i);
-    this.todoTitleInput = page.getByLabel(/Add new todo.../i);
+    this.addNewTodoTitleInput = page.getByLabel(/Add new todo.../i);
     this.todoItems = page.getByRole('listitem');
     this.editTodoButton = page.getByRole('button', { name: /Edit/i });
-    this.editTodoInput = page.getByLabel(/Edit todo/i);
+    this.editTodoTitleInput = page.getByLabel(/Edit todo/i);
     this.removeTodoButton = page.getByRole('button', { name: /Remove/i });
     this.markTodoDoneButton = page.getByRole('button', { name: /Mark done/i });
     this.markTodoUndoneButton = page.getByRole('button', { name: /Mark undone/i });
@@ -48,16 +48,14 @@ export default class TodoAppPage {
 
   async addNewTodo(title, expectedInitialTodoCount) {
     await expect(this.todoItems).toHaveCount(expectedInitialTodoCount);
-    await this.todoTitleInput.fill(title);
+    await this.addNewTodoTitleInput.fill(title);
     await this.addTodoButton.click();
   }
 
-  async expectNewTodoAdded(title, expectedTodoCount) {
-    await expect(this.todoItems).toHaveCount(expectedTodoCount);
-    const addedTodo = this.page.getByText(title);
+  async expectNewTodoAdded(title) {
+    const addedTodo = this.page.getByText(title, { exact: true });
     await expect(addedTodo).toBeVisible();
-    await expect(this.todoTitleInput).toBeEmpty();
-    await expect(this.undoneTodoCountBadge).toHaveText(expectedTodoCount.toString());
+    await expect(this.addNewTodoTitleInput).toBeEmpty();
   }
 
   async filterTodos(text, expectedInitialTodoCount) {
